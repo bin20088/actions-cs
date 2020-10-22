@@ -54,9 +54,7 @@ jobs:
         wget $REPO_URL_armv8
         mkdir ./openwrt && tar -xvJf *.tar.xz -C ./openwrt --strip-components 1
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-        cd openwrt
-        git clone https://github.com/bin20088/luci-app-koolproxy.git package/luci-app-koolproxy
-        sed -i 's/koolproxy=m/koolproxy=y/g' .config
+        git clone https://github.com/bin20088/luci-app-koolproxy.git /openwrt/package/luci-app-koolproxy
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
