@@ -74,7 +74,7 @@ jobs:
       id: compile
       run: |
         cd openwrt
-        make package/openwrt-packages/luci-app-koolproxy/compile V=99
+        make package/luci-app-koolproxy/compile V=99
         echo "::set-output name=status::success"
 
     - name: Upload bin directory
