@@ -28,7 +28,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-18.04
-      
+
     - name: Checkout
       uses: actions/checkout@main
 
@@ -44,7 +44,7 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-        
+
     - name: Clone source code # 克隆源代码
       id: source
       working-directory: /workdir
@@ -53,7 +53,6 @@ jobs:
         wget $REPO_URL_armv8
         mkdir ./openwrt && tar -xvJf *.tar.xz -C ./openwrt --strip-components 1
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-        cd openwrt
 
     - name: Load custom configuration
       run: |
@@ -69,3 +68,21 @@ jobs:
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
+    - name: Compile the firmware
+      id: compile
+      run: |
+        cd openwrt
+        make package/openwrt-packages/luci-app-koolproxy/compile V=99
+        echo "::set-output name=status::success"
+
+    - name: Upload bin directory
+      uses: actions/upload-artifact@main
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true' && !cancelled()
+      with:
+        name: cs
+        path: openwrt/bin
+
+    - name: WeChat notification
+      if: steps.compile.outputs.status == 'success' && !cancelled()
+      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.FILE_NAME }}编译结束
