@@ -54,14 +54,9 @@ jobs:
         wget $REPO_URL_armv8
         mkdir ./openwrt && tar -xvJf *.tar.xz -C ./openwrt --strip-components 1
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-
-    - name: Load custom configuration
-      run: |
-        [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        chmod +x $DIY_SH
         cd openwrt
-        $GITHUB_WORKSPACE/$DIY_SH
+        git clone https://github.com/bin20088/luci-app-koolproxy.git package/luci-app-koolproxy
+        sed -i 's/koolproxy=m/koolproxy=y/g' .config
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
