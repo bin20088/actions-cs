@@ -30,7 +30,7 @@ jobs:
         sudo wget https://downloads.openwrt.org/snapshots/targets/armvirt/64/openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         sudo tar -xvJf *.tar.xz
         cd openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
-        sudo git clone https://github.com/bin20088/luci-app-koolproxyR.git package/luci-app-koolproxyR
+        sudo git clone https://github.com/bin20088/luci-app-koolproxy.git package/luci-app-koolproxy
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
@@ -42,7 +42,7 @@ jobs:
     - name: compile
       run: |
         cd /home/openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
-        sudo make package/luci-app-koolproxyR/compile V=99
+        sudo make package/luci-app-koolproxy/compile V=99
         sudo mv bin /home/bin
 
     - name: Upload bin directory
