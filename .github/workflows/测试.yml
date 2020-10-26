@@ -42,7 +42,7 @@ jobs:
     - name: compile
       run: |
         cd /home/openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
-        sudo make package/luci-app-koolproxy/compile V=99
+        sudo make package/luci-app-koolproxyR/compile V=99
         sudo mv bin /home/bin
 
     - name: Upload bin directory
