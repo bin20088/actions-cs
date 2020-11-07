@@ -30,7 +30,7 @@ jobs:
         sudo wget https://downloads.openwrt.org/snapshots/targets/armvirt/64/openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         sudo tar -xvJf *.tar.xz
         cd openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
-        sudo svn co https://github.com/firker/diy-ziyong/trunk/luci-app-koolproxyR package/luci-app-koolproxyR
+        git clone https://github.com/wlfit80/luci-app-koolproxyR.git package/luci-app-koolproxyR
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
@@ -51,5 +51,11 @@ jobs:
         name: cs
         path: /home/bin
 
-    - name: WeChat notification
-      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.FILE_NAME }}编译结束
+    - name: send custom message #TG推送
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        message: | 
+          测试.
+          完成.
