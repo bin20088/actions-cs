@@ -26,7 +26,7 @@ jobs:
 
     - name: origan
       run: |
-        cd /home
+        cd /opt
         sudo wget https://downloads.openwrt.org/snapshots/targets/armvirt/64/openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         sudo tar -xvJf *.tar.xz
         cd openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
@@ -41,12 +41,12 @@ jobs:
 
     - name: compile
       run: |
-        cd /home/openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
+        cd /opt/openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
         sudo make package/luci-app-koolproxyR/compile V=99
-        sudo mv bin /home/bin
+        sudo mv bin /opt/bin
 
     - name: Upload bin directory
       uses: actions/upload-artifact@main
       with:
         name: cs
-        path: /home/bin
+        path: /opt/bin
