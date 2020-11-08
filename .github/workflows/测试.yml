@@ -27,9 +27,9 @@ jobs:
     - name: origan
       run: |
         cd /opt
-        sudo wget https://downloads.openwrt.org/snapshots/targets/armvirt/64/openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        sudo wget https://downloads.openwrt.org/releases/19.07.4/targets/armvirt/64/openwrt-sdk-19.07.4-armvirt-64_gcc-7.5.0_musl.Linux-x86_64.tar.xz
         sudo tar -xvJf *.tar.xz
-        cd openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
+        cd openwrt-sdk-19.07.4-armvirt-64_gcc-7.5.0_musl.Linux-x86_64
         git clone https://github.com/wlfit80/luci-app-koolproxyR.git package/luci-app-koolproxyR
 
     - name: SSH connection to Actions
@@ -41,7 +41,7 @@ jobs:
 
     - name: compile
       run: |
-        cd /opt/openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
+        cd /opt/openwrt-sdk-19.07.4-armvirt-64_gcc-7.5.0_musl.Linux-x86_64
         sudo make package/luci-app-koolproxyR/compile V=99
         sudo mv bin /opt/bin
 
